@@ -1,4 +1,4 @@
-/* .form-section {
+.form-section {
   z-index: 100;
   width: 100%;
   text-align: center;
@@ -28,4 +28,9 @@
   overflow: hidden;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1),
     0 1px 1px -1px rgba(0, 0, 0, 0.1);
-} */
+}
+
+.info {
+  display: flex;
+  gap: 15px;
+}

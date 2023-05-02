@@ -2,10 +2,11 @@ import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-const gallerySimpleLightbox = new SimpleLightbox('.gallery a');
+const gallerySimpleLightbox = new SimpleLightbox('.gallery a', {});
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const btnLoadMore = document.querySelector('.load-more');
+const guard = document.querySelector('.guard');
 let page;
 let query = '';
 
@@ -53,7 +54,8 @@ async function onFormSubmit(e) {
           comments,
           downloads,
         }) => {
-          return `<a href ="${largeImageURL} class = " gallery gallery-item"><div class="photo-card">
+          return `<a href ="${largeImageURL} class ="gallery-item">
+          <div class="photo-card">
           <img src="${webformatURL}" alt="${tags}" loading="lazy" />
           <div class="info">
             <p class="info-item">
@@ -69,7 +71,8 @@ async function onFormSubmit(e) {
               <b>Downloads ${downloads}</b>
             </p>
           </div>
-        </div></a>`;
+        </div>
+        </a>`;
         }
       )
       .join('');
@@ -109,23 +112,23 @@ async function onBtnLoadMore(e) {
         comments,
         downloads,
       }) => {
-        return `<div class="photo-card">
-                <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-                <div class="info">
-                  <p class="info-item">
-                    <b>Likes ${likes}</b>
-                  </p>
-                  <p class="info-item">
-                    <b>Views ${views}</b>
-                  </p>
-                  <p class="info-item">
-                    <b>Comments ${comments}</b>
-                  </p>
-                  <p class="info-item">
-                    <b>Downloads ${downloads}</b>
-                  </p>
-                </div>
-              </div>`;
+        return `<a href ="${largeImageURL} class ="gallery gallery-item"><div class="photo-card">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <div class="info">
+          <p class="info-item">
+            <b>Likes ${likes}</b>
+          </p>
+          <p class="info-item">
+            <b>Views ${views}</b>
+          </p>
+          <p class="info-item">
+            <b>Comments ${comments}</b>
+          </p>
+          <p class="info-item">
+            <b>Downloads ${downloads}</b>
+          </p>
+        </div>
+      </div></a>`;
       }
     )
     .join('');
