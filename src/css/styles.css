@@ -1,0 +1,31 @@
+/* .form-section {
+  z-index: 100;
+  width: 100%;
+  text-align: center;
+  background-color: #27275f;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+.gallery-item {
+  width: calc(100% - 20px) / 3;
+  width: calc(25% - 15px);
+  color: #000;
+  min-height: 144px;
+  transition: transform var(--animation-duration) var(--timing-function);
+  border-radius: 5px;
+  flex-direction: column;
+  text-decoration: none;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1),
+    0 1px 1px -1px rgba(0, 0, 0, 0.1);
+} */
