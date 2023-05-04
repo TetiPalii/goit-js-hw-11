@@ -2,7 +2,7 @@ import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-const gallerySimpleLightbox = new SimpleLightbox('.gallery a', {});
+const galleryLightbox = new SimpleLightbox('.gallery a', {});
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 const btnLoadMore = document.querySelector('.load-more');
@@ -54,8 +54,9 @@ async function onFormSubmit(e) {
           comments,
           downloads,
         }) => {
-          return `<a href ="${largeImageURL} class ="gallery-item">
+          return `
           <div class="photo-card">
+          <a href ="${largeImageURL} class ="gallery-item">
           <img src="${webformatURL}" alt="${tags}" loading="lazy" />
           <div class="info">
             <p class="info-item">
@@ -71,14 +72,14 @@ async function onFormSubmit(e) {
               <b>Downloads ${downloads}</b>
             </p>
           </div>
-        </div>
-        </a>`;
+          </a>
+        </div>`;
         }
       )
       .join('');
     gallery.innerHTML = markup;
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-    gallerySimpleLightbox.refresh();
+    galleryLightbox.refresh();
     btnLoadMore.hidden = false;
   }
 }
@@ -112,7 +113,9 @@ async function onBtnLoadMore(e) {
         comments,
         downloads,
       }) => {
-        return `<a href ="${largeImageURL} class ="gallery gallery-item"><div class="photo-card">
+        return `
+        <div class="photo-card">
+        <a href ="${largeImageURL} class ="gallery-item">
         <img src="${webformatURL}" alt="${tags}" loading="lazy" />
         <div class="info">
           <p class="info-item">
@@ -128,7 +131,8 @@ async function onBtnLoadMore(e) {
             <b>Downloads ${downloads}</b>
           </p>
         </div>
-      </div></a>`;
+        </a>
+      </div>`;
       }
     )
     .join('');
