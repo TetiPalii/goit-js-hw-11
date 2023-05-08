@@ -25,8 +25,8 @@ async function onFormSubmit(e) {
   e.preventDefault();
   gallery.innerHTML = '';
   page = 1;
-
   query = e.target.searchQuery.value.trim();
+
   if (!query) {
     gallery.innerHTML = '';
     Notiflix.Notify.failure('Please, enter a search query');
@@ -48,6 +48,7 @@ async function onFormSubmit(e) {
     const {
       data: { hits, totalHits },
     } = response;
+
     if (!hits.length) {
       gallery.innerHTML = '';
       Notiflix.Notify.failure(
@@ -71,28 +72,32 @@ async function onPagination(entries, observer) {
   entries.forEach(async function (entry) {
     if (entry.isIntersecting) {
       page += 1;
-      const response = await axios.get('https://pixabay.com/api/?', {
-        params: {
-          key: '35862234-c36df0b3c5d22090eb9ac9504',
-          q: query,
-          image_type: 'photo',
-          orientation: 'horizontal',
-          safesearch: true,
-          page: page,
-          per_page: 40,
-        },
-      });
-      const {
-        data: { hits, totalHits },
-      } = response;
+      try {
+        const response = await axios.get('https://pixabay.com/api/?', {
+          params: {
+            key: '35862234-c36df0b3c5d22090eb9ac9504',
+            q: query,
+            image_type: 'photo',
+            orientation: 'horizontal',
+            safesearch: true,
+            page: page,
+            per_page: 40,
+          },
+        });
+        const {
+          data: { hits, totalHits },
+        } = response;
 
-      gallery.insertAdjacentHTML('beforeend', createGalleryCards(hits));
-      totalPages = Math.round(totalHits / 40);
-      if (page === totalPages) {
-        observer.unobserve(guard);
-        Notiflix.Notify.warning(
-          "We're sorry, but you've reached the end of search results."
-        );
+        gallery.insertAdjacentHTML('beforeend', createGalleryCards(hits));
+        totalPages = Math.ceil(totalHits / 40);
+        if (page === totalPages) {
+          observer.unobserve(guard);
+          Notiflix.Notify.warning(
+            "We're sorry, but you've reached the end of search results."
+          );
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
   });
