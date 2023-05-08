@@ -1,5 +1,5 @@
-export async function createGalleryCards(cards) {
-  const markup = await cards
+export function createGalleryCards(cards) {
+  const markup = cards
     .map(
       ({
         webformatURL,
