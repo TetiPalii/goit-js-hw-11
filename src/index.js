@@ -33,7 +33,7 @@ async function onFormSubmit(e) {
     return;
   }
   try {
-    const response = await axios.get('https://pixabay.com/api/?', {
+    const response = await axios.get('https://pixabay.com/api/', {
       params: {
         key: '35862234-c36df0b3c5d22090eb9ac9504',
         q: query,
@@ -48,6 +48,15 @@ async function onFormSubmit(e) {
     const {
       data: { hits, totalHits },
     } = response;
+    // console.log(response);
+    // console.log(totalHits);
+    // console.log(hits);
+
+    if (hits.length === totalHits) {
+      gallery.innerHTML = createGalleryCards(hits);
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+      return;
+    }
 
     if (!hits.length) {
       gallery.innerHTML = '';
@@ -59,6 +68,7 @@ async function onFormSubmit(e) {
     gallery.innerHTML = createGalleryCards(hits);
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     totalPages = Math.round(totalHits / 40);
+
     if (page !== totalPages) {
       observer.observe(guard);
     }
@@ -73,7 +83,7 @@ async function onPagination(entries, observer) {
     if (entry.isIntersecting) {
       page += 1;
       try {
-        const response = await axios.get('https://pixabay.com/api/?', {
+        const response = await axios.get('https://pixabay.com/api/', {
           params: {
             key: '35862234-c36df0b3c5d22090eb9ac9504',
             q: query,
@@ -91,6 +101,12 @@ async function onPagination(entries, observer) {
         gallery.insertAdjacentHTML('beforeend', createGalleryCards(hits));
         totalPages = Math.ceil(totalHits / 40);
         if (page === totalPages) {
+          observer.unobserve(guard);
+          Notiflix.Notify.warning(
+            "We're sorry, but you've reached the end of search results."
+          );
+        }
+        if (hits.length === totalHits) {
           observer.unobserve(guard);
           Notiflix.Notify.warning(
             "We're sorry, but you've reached the end of search results."
